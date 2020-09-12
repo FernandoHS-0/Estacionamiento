@@ -2,6 +2,12 @@
 #define ADMINISTRADOR_H
 
 #include <QDialog>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSql>
+#include <QDebug>
+#include "estacionamiento.h"
+#include <QString>
 
 namespace Ui {
 class Administrador;

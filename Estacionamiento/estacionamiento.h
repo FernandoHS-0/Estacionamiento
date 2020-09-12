@@ -2,6 +2,11 @@
 #define ESTACIONAMIENTO_H
 
 #include <QMainWindow>
+#include <QDialog>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSql>
+#include <QDebug>
 #include "administrador.h"
 
 namespace Ui {
@@ -15,6 +20,7 @@ class Estacionamiento : public QMainWindow
 public:
     explicit Estacionamiento(QWidget *parent = nullptr);
     ~Estacionamiento();
+    QSqlDatabase dbconexion;
 
 private slots:
     void on_btnIngresar_clicked();
