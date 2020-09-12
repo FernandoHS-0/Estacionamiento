@@ -30,8 +30,13 @@ private slots:
 
     void on_btnSalir_clicked();
 
+    void on_Acualizar1_clicked();
+
+    void on_actualizar2_clicked();
+
 private:
     Ui::Administrador *ui;
+     QSqlDatabase db ;
 };
 
 #endif // ADMINISTRADOR_H
