@@ -11,9 +11,9 @@ Administrador::Administrador(QWidget *parent) :
     titulos << "Folio" << "Descripcion" << "Fecha" ;
     ui->tablacomentarios->setHorizontalHeaderLabels(titulos);
 
-    /*db = QSqlDatabase::addDatabase("QODBC");
+    db = QSqlDatabase::addDatabase("QODBC");
     db.setUserName("root");
-    db.setDatabaseName("ParkingALot");*/
+    db.setDatabaseName("ParkingALot");
 
     if(db.open()){
         QSqlQuery comentarios;
