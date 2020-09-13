@@ -8,7 +8,7 @@ Estacionamiento::Estacionamiento(QWidget *parent) :
     ui->setupUi(this);
     dbconexion = QSqlDatabase::addDatabase("QODBC");
     dbconexion.setUserName("root");
-    dbconexion.setDatabaseName("Parking-A-Lot");
+    dbconexion.setDatabaseName("ParkingALot");
 }
 
 Estacionamiento::~Estacionamiento()

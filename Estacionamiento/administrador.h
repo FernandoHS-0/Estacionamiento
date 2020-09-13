@@ -34,6 +34,8 @@ private slots:
 
     void on_actualizar2_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::Administrador *ui;
      QSqlDatabase db ;
