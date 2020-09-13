@@ -57,6 +57,33 @@ Administrador::Administrador(QWidget *parent) :
 
 
 }
+     ui->setupUi(this);
+     QStringList titulos2;
+     ui->Registros->setColumnCount(5);
+     titulos2 << "Nombre" << "Id Cliente" << "Fecha" << "Hora de entrada" << "Hora de salida";
+     ui->Registros->setHorizontalHeaderLabels(titulos2);
+
+     if(db.open()){
+         QSqlQuery Registros;
+         if(Registros.exec("SELECT U.Nombre, U.ApellidoP, U.ApellidoM, R.idUsuario, R.fecha, R.horaEntrada, R.horaSalida FROM usuario as U INNER JOIN cliente as C ON U.idUsuario=C.idUsuario INNER JOIN reservacionunica as R ON C.idUsuario=R.idUsuario;")){
+             while(Registros.next()){
+                 QString nombrecompleto = Registros.value(0).toString()+Registros.value(1).toString()+Registros.value(2).toString();
+                 QString idc = Registros.value(3).toString();
+                 QString fec = Registros.value(4).toString();
+                 QString he = Registros.value(5).toString();
+                 QString hs = Registros.value(6).toString();
+
+             ui->Registros->insertRow(ui->Registros->rowCount());
+             ui->Registros->setItem(ui->Registros->rowCount()-1,0,new QTableWidgetItem(nombrecompleto));
+              ui->Registros->setItem(ui->Registros->rowCount()-1,1,new QTableWidgetItem(idc));
+               ui->Registros->setItem(ui->Registros->rowCount()-1,2,new QTableWidgetItem(fec));
+               ui->Registros->setItem(ui->Registros->rowCount()-1,3,new QTableWidgetItem(he));
+               ui->Registros->setItem(ui->Registros->rowCount()-1,4,new QTableWidgetItem(hs));
+
+             }
+         }
+     }
+
 }
 
 Administrador::~Administrador()
@@ -106,3 +133,9 @@ void Administrador::on_actualizar2_clicked()
     actual.bindValue(":NU",Nuevo);
     actual.exec();
 }
+
+void Administrador::on_pushButton_clicked()
+{
+
+}
+
