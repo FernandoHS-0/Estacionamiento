@@ -65,7 +65,7 @@
     <string notr="true">background-color: white;</string>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="Tafifas">
     <widget class="QLabel" name="label_2">
