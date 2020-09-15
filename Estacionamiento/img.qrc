@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>img/logout.png</file>
+        <file>img/logout_hover.png</file>
+        <file>img/park_b.png</file>
+        <file>img/park_w.png</file>
+        <file>img/AdministradorAzul.png</file>
+        <file>img/AdministradorBlanco.png</file>
+        <file>img/ComentariosAzul.png</file>
+        <file>img/ComentariosBlanco.png</file>
+        <file>img/LlaveAzul.png</file>
+        <file>img/LlaveBlanca.png</file>
+        <file>img/RegistroAzul.png</file>
+        <file>img/RegistroBlanco.png</file>
+        <file>img/TarifasAzul.png</file>
+        <file>img/TarifasBlanca.png</file>
+    </qresource>
+</RCC>
