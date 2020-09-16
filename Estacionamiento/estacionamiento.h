@@ -8,6 +8,7 @@
 #include <QtSql/QSql>
 #include <QDebug>
 #include "administrador.h"
+#include "objetos.h"
 
 namespace Ui {
 class Estacionamiento;

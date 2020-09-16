@@ -27,11 +27,13 @@ CONFIG += c++11
 SOURCES += \
         administrador.cpp \
         main.cpp \
-        estacionamiento.cpp
+        estacionamiento.cpp \
+        objetos.cpp
 
 HEADERS += \
         administrador.h \
-        estacionamiento.h
+        estacionamiento.h \
+        objetos.h
 
 FORMS += \
         administrador.ui \
