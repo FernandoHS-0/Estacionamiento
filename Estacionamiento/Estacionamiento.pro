@@ -27,15 +27,28 @@ CONFIG += c++11
 SOURCES += \
         administrador.cpp \
         main.cpp \
+<<<<<<< Updated upstream
         estacionamiento.cpp
 
 HEADERS += \
         administrador.h \
         estacionamiento.h
+=======
+        estacionamiento.cpp \
+        objetos.cpp \
+        usuario.cpp
+
+HEADERS += \
+        administrador.h \
+        estacionamiento.h \
+        objetos.h \
+        usuario.h
+>>>>>>> Stashed changes
 
 FORMS += \
         administrador.ui \
-        estacionamiento.ui
+        estacionamiento.ui \
+        usuario.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

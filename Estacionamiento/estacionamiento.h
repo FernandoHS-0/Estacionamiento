@@ -8,6 +8,11 @@
 #include <QtSql/QSql>
 #include <QDebug>
 #include "administrador.h"
+<<<<<<< Updated upstream
+=======
+#include "objetos.h"
+#include "usuario.h"
+>>>>>>> Stashed changes
 
 namespace Ui {
 class Estacionamiento;
@@ -26,6 +31,8 @@ private slots:
     void on_btnIngresar_clicked();
 
     void on_btnAcceder_clicked();
+
+    void on_accederEst_clicked();
 
 private:
     Ui::Estacionamiento *ui;
