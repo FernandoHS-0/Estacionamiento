@@ -43,6 +43,9 @@ HEADERS += \
         estacionamiento.h \
         objetos.h \
         usuario.h
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 FORMS += \

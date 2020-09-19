@@ -1,5 +1,11 @@
 #include "estacionamiento.h"
 #include "ui_estacionamiento.h"
+<<<<<<< Updated upstream
+=======
+#include "administrador.h"
+#include "objetos.h"
+#include "usuario.h"
+>>>>>>> Stashed changes
 
 Estacionamiento::Estacionamiento(QWidget *parent) :
     QMainWindow(parent),
@@ -31,6 +37,7 @@ void Estacionamiento::on_btnAcceder_clicked()
 void Estacionamiento::on_accederEst_clicked()
 {
     int numCliente= ui->txtNoCliente->text().toInt();
+<<<<<<< Updated upstream
     dbconexion.open();
     QSqlQuery sesionCliente;
     sesionCliente.prepare("Select idUsuario FROM cliente where IdUsuario = :noC;");
@@ -47,4 +54,22 @@ void Estacionamiento::on_accederEst_clicked()
         }
     }
     dbconexion.close();
+=======
+        dbconexion.open();
+        QSqlQuery sesionCliente;
+        sesionCliente.prepare("Select idUsuario FROM cliente where IdUsuario = :noC;");
+        sesionCliente.bindValue(":noC",numCliente);
+        sesionCliente.exec();
+        while(sesionCliente.next())
+        {
+        if(sesionCliente.value(0).toInt() ==numCliente)
+            {
+            Usua ses(sesionCliente.value(0).toInt());
+            Usuario ventana(&ses);
+            ventana.setModal(true);
+            ventana.exec();
+            }
+        }
+        dbconexion.close();
+>>>>>>> Stashed changes
 }

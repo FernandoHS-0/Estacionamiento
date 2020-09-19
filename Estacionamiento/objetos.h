@@ -22,4 +22,12 @@ public:
     int idUsuario;
 };
 
+class Usua{
+public:
+    Usua();
+    Usua(int);
+    int getid();
+    int idUsuario;
+};
+
 #endif // OBJETOS_H
