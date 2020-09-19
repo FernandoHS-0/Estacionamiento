@@ -1,5 +1,7 @@
 #include "estacionamiento.h"
 #include "ui_estacionamiento.h"
+#include "administrador.h"
+#include "objetos.h"
 
 Estacionamiento::Estacionamiento(QWidget *parent) :
     QMainWindow(parent),
