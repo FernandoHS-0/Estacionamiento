@@ -27,6 +27,8 @@ private slots:
 
     void on_btnAcceder_clicked();
 
+    void on_accederEst_clicked();
+
 private:
     Ui::Estacionamiento *ui;
 };

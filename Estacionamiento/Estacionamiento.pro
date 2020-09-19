@@ -28,16 +28,19 @@ SOURCES += \
         administrador.cpp \
         main.cpp \
         estacionamiento.cpp \
-        objetos.cpp
+        objetos.cpp \
+        usuario.cpp
 
 HEADERS += \
         administrador.h \
         estacionamiento.h \
-        objetos.h
+        objetos.h \
+        usuario.h
 
 FORMS += \
         administrador.ui \
-        estacionamiento.ui
+        estacionamiento.ui \
+        usuario.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

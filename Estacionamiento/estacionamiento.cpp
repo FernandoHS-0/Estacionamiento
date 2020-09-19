@@ -2,7 +2,7 @@
 #include "ui_estacionamiento.h"
 #include "administrador.h"
 #include "objetos.h"
-
+#include "usuario.h"
 Estacionamiento::Estacionamiento(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Estacionamiento)
@@ -42,4 +42,25 @@ void Estacionamiento::on_btnIngresar_clicked()
 void Estacionamiento::on_btnAcceder_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
+}
+
+void Estacionamiento::on_accederEst_clicked()
+{
+    int numCliente= ui->txtNoCliente->text().toInt();
+        dbconexion.open();
+        QSqlQuery sesionCliente;
+        sesionCliente.prepare("Select idUsuario FROM cliente where IdUsuario = :noC;");
+        sesionCliente.bindValue(":noC",numCliente);
+        sesionCliente.exec();
+        while(sesionCliente.next())
+        {
+        if(sesionCliente.value(0).toInt() ==numCliente)
+            {
+            Usua ses(sesionCliente.value(0).toInt());
+            Usuario ventana(&ses);
+            ventana.setModal(true);
+            ventana.exec();
+            }
+        }
+        dbconexion.close();
 }
