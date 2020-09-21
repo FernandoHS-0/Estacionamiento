@@ -50,3 +50,8 @@ Usuario::~Usuario()
 {
     delete ui;
 }
+
+void Usuario::on_pushButton_clicked()
+{
+    close();
+}

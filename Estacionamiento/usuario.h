@@ -24,6 +24,9 @@ public:
     explicit Usuario(Usua *,QWidget *parent = nullptr);
     ~Usuario();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::Usuario *ui;
     QSqlDatabase db;

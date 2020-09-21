@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>523</width>
-    <height>377</height>
+    <height>422</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
      <x>50</x>
      <y>40</y>
      <width>421</width>
-     <height>291</height>
+     <height>341</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -31,10 +31,10 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>67</x>
       <y>250</y>
-      <width>47</width>
-      <height>13</height>
+      <width>41</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="font">
@@ -49,8 +49,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>210</y>
+      <x>40</x>
+      <y>209</y>
       <width>71</width>
       <height>16</height>
      </rect>
@@ -67,10 +67,10 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>170</y>
-      <width>47</width>
-      <height>13</height>
+      <x>80</x>
+      <y>165</y>
+      <width>31</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="font">
@@ -85,7 +85,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>30</x>
       <y>120</y>
       <width>81</width>
       <height>20</height>
@@ -101,10 +101,13 @@
     </property>
    </widget>
    <widget class="QTimeEdit" name="TiempoLLegada">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>280</x>
-      <y>110</y>
+      <y>151</y>
       <width>118</width>
       <height>22</height>
      </rect>
@@ -114,7 +117,7 @@
     <property name="geometry">
      <rect>
       <x>300</x>
-      <y>80</y>
+      <y>117</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -124,6 +127,9 @@
     </property>
    </widget>
    <widget class="QTimeEdit" name="TiempoSalida">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -149,8 +155,8 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>40</y>
+      <x>155</x>
+      <y>49</y>
       <width>131</width>
       <height>31</height>
      </rect>
@@ -197,7 +203,7 @@ color: rgb(255, 255, 255);
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>210</y>
+      <y>207</y>
       <width>101</width>
       <height>21</height>
      </rect>
@@ -224,7 +230,7 @@ color: rgb(255, 255, 255);</string>
       <x>110</x>
       <y>250</y>
       <width>101</width>
-      <height>20</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -247,9 +253,9 @@ color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>166</y>
+      <y>163</y>
       <width>101</width>
-      <height>20</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -273,8 +279,8 @@ color: rgb(255, 255, 255);</string>
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>51</width>
-      <height>51</height>
+      <width>81</width>
+      <height>81</height>
      </rect>
     </property>
     <property name="text">
@@ -285,6 +291,23 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>300</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #2A4161;
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Aceptar</string>
     </property>
    </widget>
   </widget>
