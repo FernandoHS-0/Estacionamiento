@@ -36,7 +36,6 @@ void Estacionamiento::on_btnIngresar_clicked()
             vent.exec();
         }
     }
-
 }
 
 void Estacionamiento::on_btnAcceder_clicked()
@@ -47,8 +46,8 @@ void Estacionamiento::on_btnAcceder_clicked()
 void Estacionamiento::on_accederEst_clicked()
 {
     int numCliente= ui->txtNoCliente->text().toInt();
-        dbconexion.open();
         QSqlQuery sesionCliente;
+        dbconexion.open();
         sesionCliente.prepare("Select idUsuario FROM cliente where IdUsuario = :noC;");
         sesionCliente.bindValue(":noC",numCliente);
         sesionCliente.exec();
@@ -60,7 +59,8 @@ void Estacionamiento::on_accederEst_clicked()
             Usuario ventana(&ses);
             ventana.setModal(true);
             ventana.exec();
+
             }
         }
-        dbconexion.close();
+
 }
