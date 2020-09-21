@@ -112,6 +112,9 @@
       <height>22</height>
      </rect>
     </property>
+    <property name="frame">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
@@ -137,6 +140,15 @@
       <width>118</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="frame">
+     <bool>false</bool>
+    </property>
+    <property name="keyboardTracking">
+     <bool>true</bool>
+    </property>
+    <property name="currentSection">
+     <enum>QDateTimeEdit::HourSection</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_6">
@@ -293,7 +305,7 @@ color: rgb(255, 255, 255);</string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="Aceptar">
     <property name="geometry">
      <rect>
       <x>180</x>

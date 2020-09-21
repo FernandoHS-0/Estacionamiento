@@ -25,7 +25,7 @@ public:
     ~Usuario();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_Aceptar_clicked();
 
 private:
     Ui::Usuario *ui;
