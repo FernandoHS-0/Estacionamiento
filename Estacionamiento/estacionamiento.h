@@ -7,6 +7,8 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSql>
 #include <QDebug>
+#include <QList>
+#include "objetos.h"
 
 
 namespace Ui {
@@ -22,6 +24,7 @@ public:
     ~Estacionamiento();
     QSqlDatabase dbconexion;
 
+
 private slots:
     void on_btnIngresar_clicked();
 
@@ -31,6 +34,8 @@ private slots:
 
 private:
     Ui::Estacionamiento *ui;
+    QList<lugares> espacios;
+    QList<reservaciones> agenda;
 };
 
 #endif // ESTACIONAMIENTO_H
