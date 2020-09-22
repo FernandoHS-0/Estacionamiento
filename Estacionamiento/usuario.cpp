@@ -50,3 +50,9 @@ Usuario::~Usuario()
 {
     delete ui;
 }
+
+
+void Usuario::on_Aceptar_clicked()
+{
+    close();
+}

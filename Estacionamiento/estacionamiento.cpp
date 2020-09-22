@@ -65,7 +65,6 @@ void Estacionamiento::on_btnIngresar_clicked()
             vent.exec();
         }
     }
-
 }
 
 void Estacionamiento::on_btnAcceder_clicked()
@@ -79,11 +78,12 @@ void Estacionamiento::on_accederEst_clicked()
     QTime Prueba(horaAct.hour(),horaAct.minute());
     QDate diaAct = QDate::currentDate();
     int numCliente= ui->txtNoCliente->text().toInt();
-        dbconexion.open();
         QSqlQuery sesionCliente;
+        dbconexion.open();
         sesionCliente.prepare("Select idUsuario FROM cliente where IdUsuario = :noC;");
         sesionCliente.bindValue(":noC",numCliente);
         sesionCliente.exec();
+
         while(sesionCliente.next()){
             if(sesionCliente.value(0).toInt() == numCliente){
                 for(int i=0; i<agenda.length(); i++){
@@ -102,7 +102,8 @@ void Estacionamiento::on_accederEst_clicked()
                     }
                 }
 
+
             }
         }
-        dbconexion.close();
+
 }
