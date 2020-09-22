@@ -4,6 +4,7 @@
 #include "usuario.h"
 #include "objetos.h"
 #include <ctime>
+#include <QMessageBox>
 Estacionamiento::Estacionamiento(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Estacionamiento)
@@ -14,7 +15,7 @@ Estacionamiento::Estacionamiento(QWidget *parent) :
     dbconexion.setDatabaseName("ParkingALot");
 
     if(dbconexion.open()){
-       /* QSqlQuery lugares;
+        QSqlQuery lugares;
         lugares.exec("SELECT NoEspacio, idPiso, Estado FROM Espacio;");
         while (lugares.next()) {
             int nEsp = lugares.value(0).toInt(),
@@ -22,7 +23,7 @@ Estacionamiento::Estacionamiento(QWidget *parent) :
             QString est = lugares.value(2).toString();
             class lugares espacio(nEsp, idP, est);
             espacios.append(espacio);
-        }*/
+        }
 
         QSqlQuery reser;
         reser.exec("SELECT * FROM reservacionUnica;");
@@ -74,36 +75,54 @@ void Estacionamiento::on_btnAcceder_clicked()
 
 void Estacionamiento::on_accederEst_clicked()
 {
+    QMessageBox preg;
+    preg.setText("Su tiempo de tolerancia ha sido excedido ¿Desea que se le asigne otro lugar disponible?");
+    preg.setIcon(QMessageBox::Warning);
+    preg.setWindowTitle("Advertencia");
+    QAbstractButton * btnSi = preg.addButton("Si", QMessageBox::YesRole);
+    QAbstractButton * btnNo = preg.addButton("No", QMessageBox::NoRole);
     QTime horaAct = QTime::currentTime();
     QTime Prueba(horaAct.hour(),horaAct.minute());
     QDate diaAct = QDate::currentDate();
     int numCliente= ui->txtNoCliente->text().toInt();
-        QSqlQuery sesionCliente;
-        dbconexion.open();
-        sesionCliente.prepare("Select idUsuario FROM cliente where IdUsuario = :noC;");
-        sesionCliente.bindValue(":noC",numCliente);
-        sesionCliente.exec();
-
-        while(sesionCliente.next()){
-            if(sesionCliente.value(0).toInt() == numCliente){
-                for(int i=0; i<agenda.length(); i++){
-                    if(numCliente == agenda[i].idUsuario){
-                        qDebug() << "Reservacion encontrada";
-                        if(agenda[i].fecha == diaAct){
-                            qDebug() << "Fecha hoy encontrada";
-                            if(agenda[i].horallegada == Prueba){
-                                qDebug() << "Hora actual encontrada";
-                                Usua ses(sesionCliente.value(0).toInt());
-                                Usuario ventana(&ses);
-                                ventana.setModal(true);
-                                ventana.exec();
+    QSqlQuery sesionCliente;
+    dbconexion.open();
+    sesionCliente.prepare("Select idUsuario FROM cliente where IdUsuario = :noC;");
+    sesionCliente.bindValue(":noC",numCliente);
+    sesionCliente.exec();
+    while(sesionCliente.next()){
+        if(sesionCliente.value(0).toInt() == numCliente){
+            for(int i=0; i<agenda.length(); i++){
+                if(numCliente == agenda[i].idUsuario){
+                    if(agenda[i].fecha == diaAct){
+                        if( Prueba == agenda[i].horallegada || Prueba <= agenda[i].horallegada.addSecs(900)){
+                            Usua ses(sesionCliente.value(0).toInt());
+                            Usuario ventana(&ses);
+                            ventana.setModal(true);
+                            ventana.exec();
+                        }else{
+                            preg.exec();
+                            if(preg.clickedButton() == btnSi){
+                                for (int j=15; j<espacios.length(); j++){
+                                    if(espacios[j].estado == "Libre"){
+                                        QSqlQuery actualizar;
+                                        actualizar.prepare("UPDATE ReservacionUnica SET NoEspacio = :newNo WHERE IdReservacionUnica = :idRu");
+                                        actualizar.bindValue(":newNo", espacios[j].noEspacio);
+                                        actualizar.bindValue(":idRu", agenda[i].noReservacion);
+                                        if(actualizar.exec()){
+                                            Usua ses(sesionCliente.value(0).toInt());
+                                            Usuario ventana(&ses);
+                                            ventana.setModal(true);
+                                            ventana.exec();
+                                            break;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
-
-
             }
         }
-
+    }
 }
