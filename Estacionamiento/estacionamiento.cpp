@@ -110,10 +110,9 @@ void Estacionamiento::on_accederEst_clicked()
             for(int i=0; i<agenda.length(); i++){
                 if(numCliente == agenda[i].idUsuario){
                     if(agenda[i].fecha == diaAct){
-                        if( Prueba == agenda[i].horallegada || Prueba <=                                    agenda[i].horallegada.addSecs(900)){
-
+                        if( Prueba == agenda[i].horallegada || Prueba <= agenda[i].horallegada.addSecs(900)){
                             QSqlQuery LugarOcupado;
-                            LugarOcupado.prepare("SELECT ESPACIO.ESTADO FROM ESPACIO INNER JOIN             RESERVACIONUNICA ON ESPACIO.NoEspacio = RESERVACIONUNICA.NoEspacio where RESERVACIONUNICA.IdUsuario=:noC;");
+                            LugarOcupado.prepare("SELECT ESPACIO.ESTADO FROM ESPACIO INNER JOIN RESERVACIONUNICA ON ESPACIO.NoEspacio = RESERVACIONUNICA.NoEspacio where RESERVACIONUNICA.IdUsuario=:noC;");
                             LugarOcupado.bindValue(":noC",numCliente);
                             LugarOcupado.exec();
                             LugarOcupado.next();
@@ -124,33 +123,32 @@ void Estacionamiento::on_accederEst_clicked()
                                 Usuario ventana(&ses);
                                 ventana.setModal(true);
                                 ventana.exec();
-                            }else
-                            {
-         sinespacio.exec();
-        if(sinespacio.clickedButton()==btnvale){
-        QSqlQuery nombre;
-        nombre.prepare("SELECT NOMBRE,ApellidoP,ApellidoM FROM USUARIO WHERE IdUsuario=:noC;");
-        nombre.bindValue(":noC",numCliente);
-        nombre.exec();
-        nombre.next();
-        QString Nombre=nombre.value(0).toString();
-        QString ApellidoP=nombre.value(1).toString();
-        QString ApellidoM=nombre.value(2).toString();
-                                 QString html =
-                                "<img class='imageLeft' src='C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/img/park_b.png' alt='Ed' width='100' height='100'/><strong>"
-                                "<h1 style='text-align: center';>VALE</h1>"
-                                "<hr />"
-                                "<h4 style='text-align: left';>A la orden de: "+ApellidoP+" "+ApellidoM+" "+Nombre+"</h4>"
-                                "<h4>Por la suma de: La devolución de su dinero</h4>"
-                                "<h4>Por concepto de: Inconvenientes en la reservación </h4>"
-                                "<blockquote>"
-                                "<p>PUEBLA,"+QDate::currentDate().toString() +"</p>"
-                                "</blockquote>"
-                                 "<p style='text-align: right';>&nbsp; &nbsp; &nbsp;<img class='imageLeft' src='C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/img/firma.png' alt='Ed' width='50' height='50'/>&nbsp; &nbsp; &nbsp;</p>"
-                                "<p style='text-align: right';>_________________</p>"
-                          "<p style='text-align: right';>PARK -A- LOT&nbsp; &nbsp; &nbsp; &nbsp;</p>"
-                                "<hr />"
-                                "<p style='text-align: left';></p>";
+                            }else{
+                                sinespacio.exec();
+                                if(sinespacio.clickedButton()==btnvale){
+                                    QSqlQuery nombre;
+                                    nombre.prepare("SELECT NOMBRE,ApellidoP,ApellidoM FROM USUARIO WHERE IdUsuario=:noC;");
+                                    nombre.bindValue(":noC",numCliente);
+                                    nombre.exec();
+                                    nombre.next();
+                                    QString Nombre=nombre.value(0).toString();
+                                    QString ApellidoP=nombre.value(1).toString();
+                                    QString ApellidoM=nombre.value(2).toString();
+                                    QString html =
+                                    "<img class='imageLeft' src='C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/img/park_b.png' alt='Ed' width='100' height='100'/><strong>"
+                                    "<h1 style='text-align: center';>VALE</h1>"
+                                    "<hr />"
+                                    "<h4 style='text-align: left';>A la orden de: "+ApellidoP+" "+ApellidoM+" "+Nombre+"</h4>"
+                                    "<h4>Por la suma de: La devolución de su dinero</h4>"
+                                    "<h4>Por concepto de: Inconvenientes en la reservación </h4>"
+                                    "<blockquote>"
+                                    "<p>PUEBLA,"+QDate::currentDate().toString() +"</p>"
+                                    "</blockquote>"
+                                    "<p style='text-align: right';>&nbsp; &nbsp; &nbsp;<img class='imageLeft' src='C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/img/firma.png' alt='Ed' width='50' height='50'/>&nbsp; &nbsp; &nbsp;</p>"
+                                    "<p style='text-align: right';>_________________</p>"
+                                    "<p style='text-align: right';>PARK -A- LOT&nbsp; &nbsp; &nbsp; &nbsp;</p>"
+                                    "<hr />"
+                                    "<p style='text-align: left';></p>";
 
                                     QTextDocument document;
                                     document.setHtml(html);
@@ -166,8 +164,6 @@ void Estacionamiento::on_accederEst_clicked()
 
                                 }
                             }
-
-
                         }else{
                             preg.exec();
                             if(preg.clickedButton() == btnSi){
@@ -188,6 +184,17 @@ void Estacionamiento::on_accederEst_clicked()
                                 }
                             }
                         }
+                    }
+                }else{
+                    QMessageBox sinRes;
+                    sinRes.setText("Usted no cuenta con ninguna reservación ¿Desea buscar un lugar en el primer piso?");
+                    sinRes.setIcon(QMessageBox::Warning);
+                    sinRes.setWindowTitle("Atención");
+                    QAbstractButton * btnAcept = sinRes.addButton("Si", QMessageBox::YesRole);
+                    QAbstractButton * btnCanc = sinRes.addButton("No", QMessageBox::NoRole);
+                    sinRes.exec();
+                    if(sinRes.clickedButton() == btnAcept){
+                        //Llamar a ventana para seleccionar lugar
                     }
                 }
             }
