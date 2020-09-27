@@ -137,16 +137,18 @@ void Estacionamiento::on_accederEst_clicked()
         QString ApellidoP=nombre.value(1).toString();
         QString ApellidoM=nombre.value(2).toString();
                                  QString html =
+                                "<img class='imageLeft' src='C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/img/park_b.png' alt='Ed' width='100' height='100'/><strong>"
                                 "<h1 style='text-align: center';>VALE</h1>"
                                 "<hr />"
                                 "<h4 style='text-align: left';>A la orden de: "+ApellidoP+" "+ApellidoM+" "+Nombre+"</h4>"
-                                "<h4>Por la suma de: 100 Pesos</h4>"
+                                "<h4>Por la suma de: La devolución de su dinero</h4>"
                                 "<h4>Por concepto de: Inconvenientes en la reservación </h4>"
                                 "<blockquote>"
                                 "<p>PUEBLA,"+QDate::currentDate().toString() +"</p>"
                                 "</blockquote>"
+                                 "<p style='text-align: right';>&nbsp; &nbsp; &nbsp;<img class='imageLeft' src='C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/img/firma.png' alt='Ed' width='50' height='50'/>&nbsp; &nbsp; &nbsp;</p>"
                                 "<p style='text-align: right';>_________________</p>"
-                          "<p style='text-align: right';>PARK -A- LOT&nbsp; &nbsp; &nbsp;</p>"
+                          "<p style='text-align: right';>PARK -A- LOT&nbsp; &nbsp; &nbsp; &nbsp;</p>"
                                 "<hr />"
                                 "<p style='text-align: left';></p>";
 
