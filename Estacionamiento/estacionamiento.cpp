@@ -5,6 +5,10 @@
 #include "objetos.h"
 #include <ctime>
 #include <QMessageBox>
+#include <QPrinter>
+#include <QPdfWriter>
+#include <QTextDocument>
+#include <QDesktopServices>
 Estacionamiento::Estacionamiento(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Estacionamiento)
@@ -77,13 +81,24 @@ void Estacionamiento::on_accederEst_clicked()
 {
     QMessageBox preg;
     preg.setText("Su tiempo de tolerancia ha sido excedido ¿Desea que se le asigne otro lugar disponible?");
+    QMessageBox sinespacio;
+    sinespacio.setText("Lamentamos los inconvenientes pero su lugar está ocupado ¿Qué desea hacer?");
+
     preg.setIcon(QMessageBox::Warning);
     preg.setWindowTitle("Advertencia");
+    sinespacio.setIcon(QMessageBox::Warning);
+
     QAbstractButton * btnSi = preg.addButton("Si", QMessageBox::YesRole);
     QAbstractButton * btnNo = preg.addButton("No", QMessageBox::NoRole);
+
+    QAbstractButton * btnvale = sinespacio.addButton("VALE", QMessageBox::YesRole);
+    QAbstractButton * btnbucar = sinespacio.addButton("BUSCAR NUEVO LUGAR", QMessageBox::NoRole);
+
+
     QTime horaAct = QTime::currentTime();
     QTime Prueba(horaAct.hour(),horaAct.minute());
     QDate diaAct = QDate::currentDate();
+
     int numCliente= ui->txtNoCliente->text().toInt();
     QSqlQuery sesionCliente;
     dbconexion.open();
@@ -95,11 +110,62 @@ void Estacionamiento::on_accederEst_clicked()
             for(int i=0; i<agenda.length(); i++){
                 if(numCliente == agenda[i].idUsuario){
                     if(agenda[i].fecha == diaAct){
-                        if( Prueba == agenda[i].horallegada || Prueba <= agenda[i].horallegada.addSecs(900)){
-                            Usua ses(sesionCliente.value(0).toInt());
-                            Usuario ventana(&ses);
-                            ventana.setModal(true);
-                            ventana.exec();
+                        if( Prueba == agenda[i].horallegada || Prueba <=                                    agenda[i].horallegada.addSecs(900)){
+
+                            QSqlQuery LugarOcupado;
+                            LugarOcupado.prepare("SELECT ESPACIO.ESTADO FROM ESPACIO INNER JOIN             RESERVACIONUNICA ON ESPACIO.NoEspacio = RESERVACIONUNICA.NoEspacio where RESERVACIONUNICA.IdUsuario=:noC;");
+                            LugarOcupado.bindValue(":noC",numCliente);
+                            LugarOcupado.exec();
+                            LugarOcupado.next();
+                            QString result=LugarOcupado.value(0).toString();
+                            qDebug()<<result;
+                            if(result=="Libre"){
+                                Usua ses(sesionCliente.value(0).toInt());
+                                Usuario ventana(&ses);
+                                ventana.setModal(true);
+                                ventana.exec();
+                            }else
+                            {
+         sinespacio.exec();
+        if(sinespacio.clickedButton()==btnvale){
+        QSqlQuery nombre;
+        nombre.prepare("SELECT NOMBRE,ApellidoP,ApellidoM FROM USUARIO WHERE IdUsuario=:noC;");
+        nombre.bindValue(":noC",numCliente);
+        nombre.exec();
+        nombre.next();
+        QString Nombre=nombre.value(0).toString();
+        QString ApellidoP=nombre.value(1).toString();
+        QString ApellidoM=nombre.value(2).toString();
+                                 QString html =
+                                "<h1 style='text-align: center';>VALE</h1>"
+                                "<hr />"
+                                "<h4 style='text-align: left';>A la orden de: "+ApellidoP+" "+ApellidoM+" "+Nombre+"</h4>"
+                                "<h4>Por la suma de: 100 Pesos</h4>"
+                                "<h4>Por concepto de: Inconvenientes en la reservación </h4>"
+                                "<blockquote>"
+                                "<p>PUEBLA,"+QDate::currentDate().toString() +"</p>"
+                                "</blockquote>"
+                                "<p style='text-align: right';>_________________</p>"
+                          "<p style='text-align: right';>PARK -A- LOT&nbsp; &nbsp; &nbsp;</p>"
+                                "<hr />"
+                                "<p style='text-align: left';></p>";
+
+                                    QTextDocument document;
+                                    document.setHtml(html);
+
+                                    QPrinter printer(QPrinter::PrinterResolution);
+                                    printer.setOutputFormat(QPrinter::PdfFormat);
+                                    printer.setPaperSize(QPrinter::A4);
+                                    printer.setOutputFileName("/tmp/vale.pdf");
+                                    printer.setPageMargins(QMarginsF(15, 15, 15, 15));
+
+                                    document.print(&printer);
+                                    QDesktopServices::openUrl(QUrl::fromLocalFile("/tmp/vale.pdf"));
+
+                                }
+                            }
+
+
                         }else{
                             preg.exec();
                             if(preg.clickedButton() == btnSi){
