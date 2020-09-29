@@ -123,10 +123,25 @@ void Estacionamiento::on_accederEst_clicked()
                             LugarOcupado.bindValue(":noC",numCliente);
                             LugarOcupado.exec();
                             LugarOcupado.next();
-                            //query para el tiempo sea nulo
                             QString result=LugarOcupado.value(0).toString();
-                            qDebug()<<result;
-                            qDebug()<< permiso;
+                            QSqlQuery hora;
+
+                            hora.prepare("Select HoraEntradaReal from reservacionunica where idUsuario=:noC");
+                            hora.bindValue(":noC",numCliente);
+                            hora.exec();
+                            hora.next();
+
+                            QString Hora= hora.value(0).toString();
+                            if(Hora==""){
+                                permiso=false;
+                            }
+                            else{
+                                permiso=true;
+                            }
+
+                            qDebug()<< "la hora es: "<<Hora;
+                            qDebug()<<"El lugar está: "<<result;
+                            qDebug()<<"El permiso es: "<< permiso;
                             if(result=="Libre" || permiso==true ){ //La primera vez permiso es false
                                 Usua ses(sesionCliente.value(0).toInt());
                                 Usuario ventana(&permiso,&ses);

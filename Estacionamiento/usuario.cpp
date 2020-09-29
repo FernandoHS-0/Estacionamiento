@@ -26,19 +26,17 @@ Usuario::Usuario(bool *perm,Usua * ses, QWidget *parent) :
     LugarOcupado2.next();
     QString Permiso=LugarOcupado2.value(0).toString();
     qDebug()<<Permiso;
-        if(Permiso=="Libre"){
-            ui->Finalizar->setVisible(false);
+        if(Permiso=="Libre"){  
             ui->Aceptar->setVisible(true);
-            ui->pushButton_3->setVisible(true);
+            ui->pushButton_3->setVisible(false);
         }
             else{
-            ui->Finalizar->setVisible(true);
             ui->Aceptar->setVisible(false);
-            ui->pushButton_3->setVisible(false);
+            ui->pushButton_3->setVisible(true);
 }
         //query para sacar el id de la res.
     QTime EntradaR = QTime::currentTime();
-    Entrada.prepare("UPDATE reservacionunica SET HoraEntradaReal=:HER WHERE IdResercionUnica= ");
+    Entrada.prepare("UPDATE reservacionunica SET HoraEntradaReal=:HER WHERE IdUsuario=:noC");
     Entrada.bindValue(":noC",id);
     Entrada.bindValue(":HER",EntradaR);
     Entrada.exec();
