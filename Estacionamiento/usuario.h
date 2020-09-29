@@ -21,7 +21,7 @@ class Usuario : public QDialog
     Q_OBJECT
 
 public:
-    explicit Usuario(Usua *,QWidget *parent = nullptr);
+    explicit Usuario(bool *,Usua *,QWidget *parent = nullptr);
     ~Usuario();
 
 private slots:

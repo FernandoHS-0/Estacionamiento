@@ -20,7 +20,8 @@ Estacionamiento::Estacionamiento(QWidget *parent) :
 
     if(dbconexion.open()){
         QSqlQuery lugares;
-        lugares.exec("SELECT NoEspacio, idPiso, Estado FROM Espacio;");
+        lugares.prepare("SELECT NoEspacio, idPiso, Estado FROM Espacio;");
+        lugares.exec();
         while (lugares.next()) {
             int nEsp = lugares.value(0).toInt(),
                 idP = lugares.value(1).toInt();
@@ -30,7 +31,8 @@ Estacionamiento::Estacionamiento(QWidget *parent) :
         }
 
         QSqlQuery reser;
-        reser.exec("SELECT * FROM reservacionUnica;");
+        reser.prepare("SELECT * FROM reservacionUnica;");
+        reser.exec();
         while(reser.next()){
             int idRu = reser.value(0).toInt(),
                 idT = reser.value(1).toInt(),
@@ -43,9 +45,13 @@ Estacionamiento::Estacionamiento(QWidget *parent) :
             reservaciones fecha(idRu, idT, idP, noE, idU, fech, hLl, hSa);
             agenda.append(fecha);
         }
-        dbconexion.close();
     }
+    dbconexion.close();
 }
+void Estacionamiento::setpermiso(int per){
+    permiso=per;
+}
+
 
 Estacionamiento::~Estacionamiento()
 {
@@ -117,11 +123,13 @@ void Estacionamiento::on_accederEst_clicked()
                             LugarOcupado.bindValue(":noC",numCliente);
                             LugarOcupado.exec();
                             LugarOcupado.next();
+                            //query para el tiempo sea nulo
                             QString result=LugarOcupado.value(0).toString();
                             qDebug()<<result;
-                            if(result=="Libre"){
+                            qDebug()<< permiso;
+                            if(result=="Libre" || permiso==true ){ //La primera vez permiso es false
                                 Usua ses(sesionCliente.value(0).toInt());
-                                Usuario ventana(&ses);
+                                Usuario ventana(&permiso,&ses);
                                 ventana.setModal(true);
                                 ventana.exec();
                             }else
@@ -179,7 +187,7 @@ void Estacionamiento::on_accederEst_clicked()
                                         actualizar.bindValue(":idRu", agenda[i].noReservacion);
                                         if(actualizar.exec()){
                                             Usua ses(sesionCliente.value(0).toInt());
-                                            Usuario ventana(&ses);
+                                            Usuario ventana(&permiso,&ses);
                                             ventana.setModal(true);
                                             ventana.exec();
                                             break;

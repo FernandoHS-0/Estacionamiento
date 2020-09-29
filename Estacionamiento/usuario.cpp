@@ -1,7 +1,7 @@
 #include "usuario.h"
 #include "ui_usuario.h"
 
-Usuario::Usuario(Usua * ses, QWidget *parent) :
+Usuario::Usuario(bool *perm,Usua * ses, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Usuario)
 {
@@ -11,17 +11,38 @@ Usuario::Usuario(Usua * ses, QWidget *parent) :
     db = QSqlDatabase::addDatabase("QODBC");
     db.setUserName("root");
     db.setDatabaseName("ParkingALot");
-    //
+    bool * p= new bool{true};
+    perm=p;
     QSqlQuery LugarOcupado;
+    QSqlQuery LugarOcupado2;
     QSqlQuery Entrada;
     int id=ses->getid();
     qDebug()<< id;
     db.open();
+
+    LugarOcupado2.prepare("SELECT ESPACIO.ESTADO FROM ESPACIO INNER JOIN RESERVACIONUNICA ON ESPACIO.NoEspacio = RESERVACIONUNICA.NoEspacio where RESERVACIONUNICA.IdUsuario=:noC;");
+    LugarOcupado2.bindValue(":noC",id);
+    LugarOcupado2.exec();
+    LugarOcupado2.next();
+    QString Permiso=LugarOcupado2.value(0).toString();
+    qDebug()<<Permiso;
+        if(Permiso=="Libre"){
+            ui->Finalizar->setVisible(false);
+            ui->Aceptar->setVisible(true);
+            ui->pushButton_3->setVisible(true);
+        }
+            else{
+            ui->Finalizar->setVisible(true);
+            ui->Aceptar->setVisible(false);
+            ui->pushButton_3->setVisible(false);
+}
+        //query para sacar el id de la res.
     QTime EntradaR = QTime::currentTime();
-    Entrada.prepare("UPDATE reservacionunica SET HoraEntradaReal=:HER WHERE  idUsuario=:noC && Fecha=:Fe;");
+    Entrada.prepare("UPDATE reservacionunica SET HoraEntradaReal=:HER WHERE IdResercionUnica= ");
     Entrada.bindValue(":noC",id);
     Entrada.bindValue(":HER",EntradaR);
     Entrada.exec();
+
     LugarOcupado.prepare("UPDATE ESPACIO INNER JOIN RESERVACIONUNICA ON ESPACIO.NoEspacio = RESERVACIONUNICA.NoEspacio SET ESTADO = 'OCUPADO' where RESERVACIONUNICA.IdUsuario=:noC;");
     LugarOcupado.bindValue(":noC",id);
     LugarOcupado.exec();
@@ -82,9 +103,6 @@ void Usuario::on_pushButton_3_clicked()
     Salida.bindValue(":HSR",SalidaR);
     Salida.bindValue(":Fe",Hoy);
     Salida.exec();
-    LugarLibre.prepare("UPDATE ESPACIO INNER JOIN RESERVACIONUNICA ON ESPACIO.NoEspacio = RESERVACIONUNICA.NoEspacio SET ESTADO = 'Libre' where RESERVACIONUNICA.IdUsuario=:noC;");
-    LugarLibre.bindValue(":noC",id);
-    LugarLibre.exec();
     db.close();
     close();
 

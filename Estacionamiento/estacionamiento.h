@@ -22,7 +22,9 @@ class Estacionamiento : public QMainWindow
 public:
     explicit Estacionamiento(QWidget *parent = nullptr);
     ~Estacionamiento();
+    void setpermiso(int);
     QSqlDatabase dbconexion;
+    bool permiso;
 
 
 private slots:
