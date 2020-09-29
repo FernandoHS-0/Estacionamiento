@@ -219,10 +219,10 @@ QDoubleSpinBox{
      <string>Tipo de tarifa:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="Aceptar">
     <property name="geometry">
      <rect>
-      <x>470</x>
+      <x>410</x>
       <y>320</y>
       <width>91</width>
       <height>31</height>
@@ -249,12 +249,37 @@ QPushButton:Hover{
      <rect>
       <x>190</x>
       <y>20</y>
-      <width>271</width>
+      <width>371</width>
       <height>61</height>
      </rect>
     </property>
     <property name="text">
      <string>Bienvenido, por favor, acceda a su lugar</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>320</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	background-color: #2A4161;
+	color: white;
+	font: 10pt &quot;Corbel&quot;;
+	border: none;
+}
+
+QPushButton:Hover{
+	background-color: #C2C9F2;
+}</string>
+    </property>
+    <property name="text">
+     <string>Salir</string>
     </property>
    </widget>
   </widget>

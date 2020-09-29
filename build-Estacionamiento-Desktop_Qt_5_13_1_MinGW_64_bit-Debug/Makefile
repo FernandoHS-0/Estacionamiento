@@ -211,6 +211,7 @@ Makefile: ../Estacionamiento/Estacionamiento.pro C:/Qt/Qt5.13.1/5.13.1/mingw73_6
 		C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/qt_config.prf \
 		C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/win32-g++/qmake.conf \
 		C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/exclusive_builds.prf \
 		C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/toolchain.prf \
 		C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/default_pre.prf \
@@ -234,6 +235,7 @@ Makefile: ../Estacionamiento/Estacionamiento.pro C:/Qt/Qt5.13.1/5.13.1/mingw73_6
 		C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/yacc.prf \
 		C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/lex.prf \
 		../Estacionamiento/Estacionamiento.pro \
+		C:/Qt/Qt5.13.1/5.13.1/mingw73_64/lib/Qt5PrintSupport.prl \
 		C:/Qt/Qt5.13.1/5.13.1/mingw73_64/lib/Qt5Widgets.prl \
 		C:/Qt/Qt5.13.1/5.13.1/mingw73_64/lib/Qt5Gui.prl \
 		C:/Qt/Qt5.13.1/5.13.1/mingw73_64/lib/Qt5Sql.prl \
@@ -388,6 +390,7 @@ C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/qt_functions.prf:
 C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/qt_config.prf:
 C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/win32-g++/qmake.conf:
 C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/exclusive_builds.prf:
 C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/toolchain.prf:
 C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/default_pre.prf:
@@ -411,6 +414,7 @@ C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/exceptions.prf:
 C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/yacc.prf:
 C:/Qt/Qt5.13.1/5.13.1/mingw73_64/mkspecs/features/lex.prf:
 ../Estacionamiento/Estacionamiento.pro:
+C:/Qt/Qt5.13.1/5.13.1/mingw73_64/lib/Qt5PrintSupport.prl:
 C:/Qt/Qt5.13.1/5.13.1/mingw73_64/lib/Qt5Widgets.prl:
 C:/Qt/Qt5.13.1/5.13.1/mingw73_64/lib/Qt5Gui.prl:
 C:/Qt/Qt5.13.1/5.13.1/mingw73_64/lib/Qt5Sql.prl:

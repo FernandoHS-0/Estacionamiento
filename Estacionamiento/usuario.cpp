@@ -1,20 +1,27 @@
 #include "usuario.h"
 #include "ui_usuario.h"
 
-Usuario::Usuario(Usua * ses,QWidget *parent) :
+Usuario::Usuario(Usua * ses, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Usuario)
 {
+
     ui->setupUi(this);
     sesionUsuario= ses;
     db = QSqlDatabase::addDatabase("QODBC");
     db.setUserName("root");
     db.setDatabaseName("ParkingALot");
-
+    //
     QSqlQuery LugarOcupado;
+    QSqlQuery Entrada;
     int id=ses->getid();
     qDebug()<< id;
     db.open();
+    QTime EntradaR = QTime::currentTime();
+    Entrada.prepare("UPDATE reservacionunica SET HoraEntradaReal=:HER WHERE  idUsuario=:noC && Fecha=:Fe;");
+    Entrada.bindValue(":noC",id);
+    Entrada.bindValue(":HER",EntradaR);
+    Entrada.exec();
     LugarOcupado.prepare("UPDATE ESPACIO INNER JOIN RESERVACIONUNICA ON ESPACIO.NoEspacio = RESERVACIONUNICA.NoEspacio SET ESTADO = 'OCUPADO' where RESERVACIONUNICA.IdUsuario=:noC;");
     LugarOcupado.bindValue(":noC",id);
     LugarOcupado.exec();
@@ -55,4 +62,30 @@ Usuario::~Usuario()
 void Usuario::on_Aceptar_clicked()
 {
     close();
+}
+
+void Usuario::on_pushButton_3_clicked()
+{
+    db = QSqlDatabase::addDatabase("QODBC");
+    db.setUserName("root");
+    db.setDatabaseName("ParkingALot");
+    db.open();
+    int id=sesionUsuario->getid();
+    QSqlQuery Salida;
+    QSqlQuery LugarLibre;
+    QTime SalidaR = QTime::currentTime();
+    QDate Hoy = QDate::currentDate();
+    qDebug() << SalidaR;
+    qDebug() << Hoy;
+    Salida.prepare("UPDATE reservacionunica SET HoraSalidaReal=:HSR WHERE  idUsuario=:noC && Fecha=:Fe;");
+    Salida.bindValue(":noC",id);
+    Salida.bindValue(":HSR",SalidaR);
+    Salida.bindValue(":Fe",Hoy);
+    Salida.exec();
+    LugarLibre.prepare("UPDATE ESPACIO INNER JOIN RESERVACIONUNICA ON ESPACIO.NoEspacio = RESERVACIONUNICA.NoEspacio SET ESTADO = 'Libre' where RESERVACIONUNICA.IdUsuario=:noC;");
+    LugarLibre.bindValue(":noC",id);
+    LugarLibre.exec();
+    db.close();
+    close();
+
 }
