@@ -195,6 +195,11 @@ void Estacionamiento::on_accederEst_clicked()
                     sinRes.exec();
                     if(sinRes.clickedButton() == btnAcept){
                         //Llamar a ventana para seleccionar lugar
+                        //Usua sesC(sesionCliente.value(0).toInt());
+                        Usua sesC(sesionCliente.value(0).toInt());
+                        segV = new Lugares(&sesC, this);
+                        segV->exec();
+                        break;
                     }
                 }
             }
