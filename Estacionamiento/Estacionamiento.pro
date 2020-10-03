@@ -26,6 +26,7 @@ CONFIG += c++11
 
 SOURCES += \
         administrador.cpp \
+        lugares.cpp \
         main.cpp \
         estacionamiento.cpp \
         objetos.cpp \
@@ -34,12 +35,14 @@ SOURCES += \
 HEADERS += \
         administrador.h \
         estacionamiento.h \
+        lugares.h \
         objetos.h \
         usuario.h
 
 FORMS += \
         administrador.ui \
         estacionamiento.ui \
+        lugares.ui \
         usuario.ui
 
 # Default rules for deployment.

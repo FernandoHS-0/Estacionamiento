@@ -212,6 +212,22 @@ void Estacionamiento::on_accederEst_clicked()
                             }
                         }
                     }
+                }else{
+                    QMessageBox sinRes;
+                    sinRes.setText("Usted no cuenta con ninguna reservación ¿Desea buscar un lugar en el primer piso?");
+                    sinRes.setIcon(QMessageBox::Warning);
+                    sinRes.setWindowTitle("Atención");
+                    QAbstractButton * btnAcept = sinRes.addButton("Si", QMessageBox::YesRole);
+                    QAbstractButton * btnCanc = sinRes.addButton("No", QMessageBox::NoRole);
+                    sinRes.exec();
+                    if(sinRes.clickedButton() == btnAcept){
+                        //Llamar a ventana para seleccionar lugar
+                        //Usua sesC(sesionCliente.value(0).toInt());
+                        Usua sesC(sesionCliente.value(0).toInt());
+                        segV = new Lugares(&sesC, this);
+                        segV->exec();
+                        break;
+                    }
                 }
             }
         }

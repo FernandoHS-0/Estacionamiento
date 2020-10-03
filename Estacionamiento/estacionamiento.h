@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <QList>
 #include "objetos.h"
+#include "lugares.h"
 
 
 namespace Ui {
@@ -38,6 +39,7 @@ private:
     Ui::Estacionamiento *ui;
     QList<lugares> espacios;
     QList<reservaciones> agenda;
+    Lugares *segV;
 };
 
 #endif // ESTACIONAMIENTO_H
