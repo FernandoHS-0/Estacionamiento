@@ -97,7 +97,6 @@ void Administrador::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 3: _t->on_btnSalir_clicked(); break;
         case 4: _t->on_Acualizar1_clicked(); break;
         case 5: _t->on_actualizar2_clicked(); break;
-        case 6: _t->on_pushButton_clicked(); break;
         default: ;
         }
     }

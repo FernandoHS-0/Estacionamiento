@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,18 +26,24 @@ CONFIG += c++11
 
 SOURCES += \
         administrador.cpp \
+        lugares.cpp \
         main.cpp \
         estacionamiento.cpp \
-        objetos.cpp
+        objetos.cpp \
+        usuario.cpp
 
 HEADERS += \
         administrador.h \
         estacionamiento.h \
-        objetos.h
+        lugares.h \
+        objetos.h \
+        usuario.h
 
 FORMS += \
         administrador.ui \
-        estacionamiento.ui
+        estacionamiento.ui \
+        lugares.ui \
+        usuario.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
