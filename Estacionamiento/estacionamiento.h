@@ -10,7 +10,8 @@
 #include <QList>
 #include "objetos.h"
 #include "lugares.h"
-
+#include "administrador.h"
+#include "usuario.h"
 
 namespace Ui {
 class Estacionamiento;

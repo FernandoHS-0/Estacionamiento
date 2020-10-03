@@ -4,6 +4,7 @@
 #include <QDate>
 #include <QTime>
 
+
 class objetos
 {
 public:

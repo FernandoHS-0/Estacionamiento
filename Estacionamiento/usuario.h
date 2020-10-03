@@ -1,4 +1,3 @@
-
 #ifndef USUARIO_H
 #define USUARIO_H
 
@@ -23,10 +22,8 @@ class Usuario : public QDialog
 public:
     explicit Usuario(Usua *,QWidget *parent = nullptr);
     ~Usuario();
-
 private slots:
     void on_Aceptar_clicked();
-
 private:
     Ui::Usuario *ui;
     QSqlDatabase db;

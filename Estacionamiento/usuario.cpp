@@ -22,6 +22,7 @@ Usuario::Usuario(Usua * ses,QWidget *parent) :
 
     // query para obtener las horas de entra y salida de la reservacion
     db.open();
+    // query para obtener las horas de entra y salida de la reservacion
     QSqlQuery Horas;
     Horas.prepare("select r.HoraEntrada, r.HoraSalida, e.idPiso,e.NoEspacio,t.Descripcion,t.Monto FROM Reservacionunica as r inner join espacio as e on r.NoEspacio=e.NoEspacio inner join Tarifa as t on r.idTarifa=t.idTarifa  where r.idUsuario=:noC;");
 
@@ -50,7 +51,6 @@ Usuario::~Usuario()
 {
     delete ui;
 }
-
 
 void Usuario::on_Aceptar_clicked()
 {
