@@ -8,6 +8,8 @@
 #include <QDebug>
 #include "estacionamiento.h"
 #include <QString>
+#include <QMessageBox>
+#include "objetos.h"
 
 namespace Ui {
 class Administrador;
@@ -18,7 +20,7 @@ class Administrador : public QDialog
     Q_OBJECT
 
 public:
-    explicit Administrador(QWidget *parent = nullptr);
+    explicit Administrador(admin *, QWidget *parent = nullptr);
     ~Administrador();
 
 private slots:
@@ -38,7 +40,8 @@ private slots:
 
 private:
     Ui::Administrador *ui;
-     QSqlDatabase db ;
+    QSqlDatabase db ;
+    admin *sesionAdmin;
 };
 
 #endif // ADMINISTRADOR_H

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,14 +26,8 @@ CONFIG += c++11
 
 SOURCES += \
         administrador.cpp \
+        lugares.cpp \
         main.cpp \
-<<<<<<< Updated upstream
-        estacionamiento.cpp
-
-HEADERS += \
-        administrador.h \
-        estacionamiento.h
-=======
         estacionamiento.cpp \
         objetos.cpp \
         usuario.cpp
@@ -41,19 +35,20 @@ HEADERS += \
 HEADERS += \
         administrador.h \
         estacionamiento.h \
+        lugares.h \
         objetos.h \
         usuario.h
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 FORMS += \
         administrador.ui \
         estacionamiento.ui \
+        lugares.ui \
         usuario.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    img.qrc

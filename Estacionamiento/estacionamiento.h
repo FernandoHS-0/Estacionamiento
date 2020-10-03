@@ -7,12 +7,11 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSql>
 #include <QDebug>
-#include "administrador.h"
-<<<<<<< Updated upstream
-=======
+#include <QList>
 #include "objetos.h"
+#include "lugares.h"
+#include "administrador.h"
 #include "usuario.h"
->>>>>>> Stashed changes
 
 namespace Ui {
 class Estacionamiento;
@@ -27,6 +26,7 @@ public:
     ~Estacionamiento();
     QSqlDatabase dbconexion;
 
+
 private slots:
     void on_btnIngresar_clicked();
 
@@ -36,6 +36,9 @@ private slots:
 
 private:
     Ui::Estacionamiento *ui;
+    QList<lugares> espacios;
+    QList<reservaciones> agenda;
+    Lugares *segV;
 };
 
 #endif // ESTACIONAMIENTO_H

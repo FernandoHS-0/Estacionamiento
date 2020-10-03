@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.9.2, 2020-09-29T22:51:04. -->
-<qtcreator>
- <data>
-  <variable>EnvironmentId</variable>
-  <value type="QByteArray">{58f9f83f-cf28-47c2-a47c-92376117325b}</value>
+<!-- Written by QtCreator 4.11.2, 2020-09-27T08:48:38. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -291,8 +287,9 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/Estacionamiento/Estacionamiento.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/Estacionamiento/Estacionamiento.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Estacionamiento2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/Estacionamiento.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/Estacionamiento.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>
@@ -314,10 +311,10 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.FileVersion</variable>
-  <value type="int">21</value>
+  <value type="int">22</value>
  </data>
  <data>
   <variable>Version</variable>
-  <value type="int">21</value>
+  <value type="int">22</value>
  </data>
 </qtcreator>

@@ -18,17 +18,11 @@ Usuario::Usuario(Usua * ses,QWidget *parent) :
     LugarOcupado.prepare("UPDATE ESPACIO INNER JOIN RESERVACIONUNICA ON ESPACIO.NoEspacio = RESERVACIONUNICA.NoEspacio SET ESTADO = 'OCUPADO' where RESERVACIONUNICA.IdUsuario=:noC;");
     LugarOcupado.bindValue(":noC",id);
     LugarOcupado.exec();
-<<<<<<< Updated upstream
     db.close();
 
     // query para obtener las horas de entra y salida de la reservacion
     db.open();
-=======
-
-
     // query para obtener las horas de entra y salida de la reservacion
-
->>>>>>> Stashed changes
     QSqlQuery Horas;
     Horas.prepare("select r.HoraEntrada, r.HoraSalida, e.idPiso,e.NoEspacio,t.Descripcion,t.Monto FROM Reservacionunica as r inner join espacio as e on r.NoEspacio=e.NoEspacio inner join Tarifa as t on r.idTarifa=t.idTarifa  where r.idUsuario=:noC;");
 
@@ -56,4 +50,9 @@ Usuario::Usuario(Usua * ses,QWidget *parent) :
 Usuario::~Usuario()
 {
     delete ui;
+}
+
+void Usuario::on_Aceptar_clicked()
+{
+    close();
 }
