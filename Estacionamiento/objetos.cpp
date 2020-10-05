@@ -41,7 +41,7 @@ reservaciones::reservaciones(){
 
 }
 
-reservaciones::reservaciones(int noR, int idT, int idP, int noE, int idU, QDate dte, QTime hLl, QTime hSal){
+reservaciones::reservaciones(int noR, int idT, int idP, int noE, int idU, QDate dte, QTime hLl, QTime hSal, bool overB){
     noReservacion = noR;
     idTarifa = idT;
     idPago = idP;
@@ -50,4 +50,5 @@ reservaciones::reservaciones(int noR, int idT, int idP, int noE, int idU, QDate 
     fecha = dte;
     horallegada = hLl;
     horaSalida = hSal;
+    oB = overB;
 }

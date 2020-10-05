@@ -36,10 +36,11 @@ public:
 class reservaciones{
 public:
     int noReservacion, idTarifa, idPago, NoEspacio, idUsuario;
+    bool oB;
     QDate fecha;
     QTime horallegada, horaSalida;
     reservaciones();
-    reservaciones(int, int, int, int, int, QDate, QTime, QTime);
+    reservaciones(int, int, int, int, int, QDate, QTime, QTime, bool);
 };
 
 #endif // OBJETOS_H

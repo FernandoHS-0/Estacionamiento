@@ -42,7 +42,8 @@ Estacionamiento::Estacionamiento(QWidget *parent) :
             QDate fech = reser.value(5).toDate();
             QTime hLl = reser.value(6).toTime(),
                   hSa = reser.value(7).toTime();
-            reservaciones fecha(idRu, idT, idP, noE, idU, fech, hLl, hSa);
+            bool over = reser.value(8).toBool();
+            reservaciones fecha(idRu, idT, idP, noE, idU, fech, hLl, hSa, over);
             agenda.append(fecha);
         }
     }
@@ -97,13 +98,15 @@ void Estacionamiento::on_accederEst_clicked()
     QAbstractButton * btnSi = preg.addButton("Si", QMessageBox::YesRole);
     QAbstractButton * btnNo = preg.addButton("No", QMessageBox::NoRole);
 
-    QAbstractButton * btnvale = sinespacio.addButton("VALE", QMessageBox::YesRole);
-    QAbstractButton * btnbucar = sinespacio.addButton("BUSCAR NUEVO LUGAR", QMessageBox::NoRole);
+    QAbstractButton * btnvale = sinespacio.addButton("Vale", QMessageBox::YesRole);
+    QAbstractButton * btnbucar = sinespacio.addButton("Buscar nuevo lugar", QMessageBox::NoRole);
 
 
     QTime horaAct = QTime::currentTime();
     QTime Prueba(horaAct.hour(),horaAct.minute());
     QDate diaAct = QDate::currentDate();
+
+    bool encontrado = 1;
 
     int numCliente= ui->txtNoCliente->text().toInt();
     QSqlQuery sesionCliente;
@@ -114,12 +117,38 @@ void Estacionamiento::on_accederEst_clicked()
     while(sesionCliente.next()){
         if(sesionCliente.value(0).toInt() == numCliente){
             for(int i=0; i<agenda.length(); i++){
-                if(numCliente == agenda[i].idUsuario){
+                qDebug() << "No. Cliente line edit: " << numCliente;
+                qDebug() << "No. CLiente obtenido en BD: " << agenda[i].idUsuario;
+                if(numCliente == /*agenda[i].idUsuario*/1003){
                     if(agenda[i].fecha == diaAct){
-                        if( Prueba == agenda[i].horallegada || Prueba <=                                    agenda[i].horallegada.addSecs(900)){
+                        if( Prueba == agenda[i].horallegada || Prueba <= agenda[i].horallegada.addSecs(900)){
+                            if(agenda[i].oB == 1){
+                                QSqlQuery buscaLugar;
+                                buscaLugar.exec("SELECT NoEspacio, Estado FROM Espacio WHERE NoEspacio > 15;");
+                                while(buscaLugar.next()) {
+                                    if(buscaLugar.value(1).toString() != "Libre"){
+                                        encontrado = 0;
+                                    }else{
+                                        QMessageBox foundIt;
+                                        foundIt.setIcon(QMessageBox::Information);
+                                        foundIt.setText("Se le ha asignado el lugar: " + QString::number(buscaLugar.value(0).toInt()));
+                                        foundIt.setWindowTitle("Lugar encontrado");
+                                        QAbstractButton * encontradito = foundIt.addButton("Acptar", QMessageBox::AcceptRole);
+                                        foundIt.exec();
+                                        break;
+                                    }
+                                }
 
+                                if(encontrado == 0){
+                                    QMessageBox notFound;
+                                    notFound.setText("Actualmente no se encuntra ningún lugar disponible para ser reasignado");
+                                    QAbstractButton * noEn = notFound.addButton("Acptar", QMessageBox::AcceptRole);
+                                    notFound.exec();
+                                    break;
+                                }
+                            }
                             QSqlQuery LugarOcupado;
-                            LugarOcupado.prepare("SELECT ESPACIO.ESTADO FROM ESPACIO INNER JOIN             RESERVACIONUNICA ON ESPACIO.NoEspacio = RESERVACIONUNICA.NoEspacio where RESERVACIONUNICA.IdUsuario=:noC;");
+                            LugarOcupado.prepare("SELECT ESPACIO.ESTADO FROM ESPACIO INNER JOIN RESERVACIONUNICA ON ESPACIO.NoEspacio = RESERVACIONUNICA.NoEspacio where RESERVACIONUNICA.IdUsuario=:noC;");
                             LugarOcupado.bindValue(":noC",numCliente);
                             LugarOcupado.exec();
                             LugarOcupado.next();
@@ -147,33 +176,32 @@ void Estacionamiento::on_accederEst_clicked()
                                 Usuario ventana(&permiso,&ses);
                                 ventana.setModal(true);
                                 ventana.exec();
-                            }else
-                            {
-         sinespacio.exec();
-        if(sinespacio.clickedButton()==btnvale){
-        QSqlQuery nombre;
-        nombre.prepare("SELECT NOMBRE,ApellidoP,ApellidoM FROM USUARIO WHERE IdUsuario=:noC;");
-        nombre.bindValue(":noC",numCliente);
-        nombre.exec();
-        nombre.next();
-        QString Nombre=nombre.value(0).toString();
-        QString ApellidoP=nombre.value(1).toString();
-        QString ApellidoM=nombre.value(2).toString();
-                                 QString html =
-                                "<img class='imageLeft' src='C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/img/park_b.png' alt='Ed' width='100' height='100'/><strong>"
-                                "<h1 style='text-align: center';>VALE</h1>"
-                                "<hr />"
-                                "<h4 style='text-align: left';>A la orden de: "+ApellidoP+" "+ApellidoM+" "+Nombre+"</h4>"
-                                "<h4>Por la suma de: La devolución de su dinero</h4>"
-                                "<h4>Por concepto de: Inconvenientes en la reservación </h4>"
-                                "<blockquote>"
-                                "<p>PUEBLA,"+QDate::currentDate().toString() +"</p>"
-                                "</blockquote>"
-                                 "<p style='text-align: right';>&nbsp; &nbsp; &nbsp;<img class='imageLeft' src='C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/img/firma.png' alt='Ed' width='50' height='50'/>&nbsp; &nbsp; &nbsp;</p>"
-                                "<p style='text-align: right';>_________________</p>"
-                          "<p style='text-align: right';>PARK -A- LOT&nbsp; &nbsp; &nbsp; &nbsp;</p>"
-                                "<hr />"
-                                "<p style='text-align: left';></p>";
+                            }else{
+                                sinespacio.exec();
+                                if(sinespacio.clickedButton()==btnvale){
+                                    QSqlQuery nombre;
+                                    nombre.prepare("SELECT NOMBRE,ApellidoP,ApellidoM FROM USUARIO WHERE IdUsuario=:noC;");
+                                    nombre.bindValue(":noC",numCliente);
+                                    nombre.exec();
+                                    nombre.next();
+                                    QString Nombre=nombre.value(0).toString();
+                                    QString ApellidoP=nombre.value(1).toString();
+                                    QString ApellidoM=nombre.value(2).toString();
+                                    QString html =
+                                    "<img class='imageLeft' src='C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/img/park_b.png' alt='Ed' width='100' height='100'/><strong>"
+                                    "<h1 style='text-align: center';>VALE</h1>"
+                                    "<hr />"
+                                    "<h4 style='text-align: left';>A la orden de: "+ApellidoP+" "+ApellidoM+" "+Nombre+"</h4>"
+                                    "<h4>Por la suma de: La devolución de su dinero</h4>"
+                                    "<h4>Por concepto de: Inconvenientes en la reservación </h4>"
+                                    "<blockquote>"
+                                    "<p>PUEBLA,"+QDate::currentDate().toString() +"</p>"
+                                    "</blockquote>"
+                                    "<p style='text-align: right';>&nbsp; &nbsp; &nbsp;<img class='imageLeft' src='C:/Users/luisd/Desktop/universidad/QT/Estacionamiento/Estacionamiento/img/firma.png' alt='Ed' width='50' height='50'/>&nbsp; &nbsp; &nbsp;</p>"
+                                    "<p style='text-align: right';>_________________</p>"
+                                    "<p style='text-align: right';>PARK -A- LOT&nbsp; &nbsp; &nbsp; &nbsp;</p>"
+                                    "<hr />"
+                                    "<p style='text-align: left';></p>";
 
                                     QTextDocument document;
                                     document.setHtml(html);
@@ -186,11 +214,8 @@ void Estacionamiento::on_accederEst_clicked()
 
                                     document.print(&printer);
                                     QDesktopServices::openUrl(QUrl::fromLocalFile("/tmp/vale.pdf"));
-
                                 }
                             }
-
-
                         }else{
                             preg.exec();
                             if(preg.clickedButton() == btnSi){
@@ -221,11 +246,11 @@ void Estacionamiento::on_accederEst_clicked()
                     QAbstractButton * btnCanc = sinRes.addButton("No", QMessageBox::NoRole);
                     sinRes.exec();
                     if(sinRes.clickedButton() == btnAcept){
-                        //Llamar a ventana para seleccionar lugar
-                        //Usua sesC(sesionCliente.value(0).toInt());
                         Usua sesC(sesionCliente.value(0).toInt());
                         segV = new Lugares(&sesC, this);
                         segV->exec();
+                        break;
+                    }else if (sinRes.clickedButton() == btnCanc) {
                         break;
                     }
                 }
