@@ -1,5 +1,6 @@
 #include "usuario.h"
 #include "ui_usuario.h"
+#include <QMessageBox>
 
 Usuario::Usuario(bool *perm,Usua * ses, QWidget *parent) :
     QDialog(parent),
@@ -20,6 +21,9 @@ Usuario::Usuario(bool *perm,Usua * ses, QWidget *parent) :
     qDebug()<< id;
     db.open();
 
+    QTime EntradaR = QTime::currentTime();
+
+
     LugarOcupado2.prepare("SELECT ESPACIO.ESTADO FROM ESPACIO INNER JOIN RESERVACIONUNICA ON ESPACIO.NoEspacio = RESERVACIONUNICA.NoEspacio where RESERVACIONUNICA.IdUsuario=:noC;");
     LugarOcupado2.bindValue(":noC",id);
     LugarOcupado2.exec();
@@ -35,7 +39,7 @@ Usuario::Usuario(bool *perm,Usua * ses, QWidget *parent) :
             ui->pushButton_3->setVisible(true);
 }
         //query para sacar el id de la res.
-    QTime EntradaR = QTime::currentTime();
+
     Entrada.prepare("UPDATE reservacionunica SET HoraEntradaReal=:HER WHERE IdUsuario=:noC");
     Entrada.bindValue(":noC",id);
     Entrada.bindValue(":HER",EntradaR);
@@ -96,6 +100,34 @@ void Usuario::on_pushButton_3_clicked()
     QDate Hoy = QDate::currentDate();
     qDebug() << SalidaR;
     qDebug() << Hoy;
+    QTime EntradaR = QTime::currentTime();
+    QSqlQuery HoraEntrada;
+    HoraEntrada.prepare("select r.HoraEntrada, r.HoraSalida, e.idPiso,e.NoEspacio,t.Descripcion,t.Monto FROM Reservacionunica as r inner join espacio as e on r.NoEspacio=e.NoEspacio inner join Tarifa as t on r.idTarifa=t.idTarifa  where r.idUsuario=:noC;");
+    HoraEntrada.bindValue(":noC",id);
+    HoraEntrada.exec();
+    QTime EntradaS = HoraEntrada.value(2).toTime();
+    int Monto=HoraEntrada.value(6).toInt();
+
+    if(EntradaR>EntradaS){
+        qDebug() << "Sientroalcondicional";
+        int TiempoExtra= EntradaS.secsTo(EntradaR);
+        int CobroExtra=(TiempoExtra/60)*10;
+        int NuevoMonto=CobroExtra+Monto;
+
+        QSqlQuery NuevoCobro;
+        NuevoCobro.prepare("UPDATE Tarifa SET Monto=:NM WHERE  idUsuario=:noC && Fecha=:Fe;");
+        NuevoCobro.bindValue(":noC",id);
+        NuevoCobro.bindValue(":NM",NuevoMonto);
+        NuevoCobro.bindValue(":Fe",Hoy);
+        NuevoCobro.exec();
+
+
+        QMessageBox SalidaExcedida;
+        SalidaExcedida.setText("Ha excedido su tiempo de estancia en el estacionamiento, se le cobrará una multade $");
+        SalidaExcedida.setIcon(QMessageBox::Warning);
+        QAbstractButton * btnSi = SalidaExcedida.addButton(tr("Confirmar"), QMessageBox::YesRole);
+        SalidaExcedida.exec();
+    }
     Salida.prepare("UPDATE reservacionunica SET HoraSalidaReal=:HSR WHERE  idUsuario=:noC && Fecha=:Fe;");
     Salida.bindValue(":noC",id);
     Salida.bindValue(":HSR",SalidaR);
