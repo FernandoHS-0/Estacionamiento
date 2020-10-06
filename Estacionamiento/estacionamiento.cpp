@@ -41,8 +41,10 @@ Estacionamiento::Estacionamiento(QWidget *parent) :
                 idU = reser.value(4).toInt();
             QDate fech = reser.value(5).toDate();
             QTime hLl = reser.value(6).toTime(),
-                  hSa = reser.value(7).toTime();
-            bool over = reser.value(8).toBool();
+                  hSa = reser.value(7).toTime(),
+                  hEnR = reser.value(8).toTime(),
+                  hSalR = reser.value(9).toTime();
+            bool over = reser.value(10).toBool();
             reservaciones fecha(idRu, idT, idP, noE, idU, fech, hLl, hSa, over);
             agenda.append(fecha);
         }
@@ -106,7 +108,7 @@ void Estacionamiento::on_accederEst_clicked()
     QTime Prueba(horaAct.hour(),horaAct.minute());
     QDate diaAct = QDate::currentDate();
 
-    bool encontrado = 1;
+    bool encontrado = true;
 
     int numCliente= ui->txtNoCliente->text().toInt();
     QSqlQuery sesionCliente;
@@ -118,31 +120,48 @@ void Estacionamiento::on_accederEst_clicked()
         if(sesionCliente.value(0).toInt() == numCliente){
             for(int i=0; i<agenda.length(); i++){
                 qDebug() << "No. Cliente line edit: " << numCliente;
-                qDebug() << "No. CLiente obtenido en BD: " << agenda[i].idUsuario;
-                if(numCliente == /*agenda[i].idUsuario*/1003){
+                qDebug() << "No. CLiente obtenido agenda: " << agenda[i].idUsuario;
+                if(numCliente == 1003){
+                    qDebug() << "Primera condicion";
                     if(agenda[i].fecha == diaAct){
+                        qDebug() << "Segunda condicion";
                         if( Prueba == agenda[i].horallegada || Prueba <= agenda[i].horallegada.addSecs(900)){
-                            if(agenda[i].oB == 1){
+                            qDebug()<< "Es en overbook?" << agenda[i].oB;
+                            if(agenda[i].oB == true){
                                 QSqlQuery buscaLugar;
                                 buscaLugar.exec("SELECT NoEspacio, Estado FROM Espacio WHERE NoEspacio > 15;");
                                 while(buscaLugar.next()) {
-                                    if(buscaLugar.value(1).toString() != "Libre"){
-                                        encontrado = 0;
-                                    }else{
+                                    qDebug() << "Estado del lugar: " << buscaLugar.value(1).toString();
+                                    if(buscaLugar.value(1).toString() == "Libre"){
+                                        qDebug() << "Lugar libre encontrado";
                                         QMessageBox foundIt;
                                         foundIt.setIcon(QMessageBox::Information);
                                         foundIt.setText("Se le ha asignado el lugar: " + QString::number(buscaLugar.value(0).toInt()));
                                         foundIt.setWindowTitle("Lugar encontrado");
-                                        QAbstractButton * encontradito = foundIt.addButton("Acptar", QMessageBox::AcceptRole);
-                                        foundIt.exec();
-                                        break;
+                                        QAbstractButton * encontradito = foundIt.addButton("Aceptar", QMessageBox::AcceptRole);
+                                        QSqlQuery reAsignacion;
+                                        reAsignacion.prepare("UPDATE Reservacionunica SET NoEspacio = :noEsp, Overbooking = false WHERE idUsuario = :idU");
+                                        reAsignacion.bindValue(":noEsp", buscaLugar.value(0).toInt());
+                                        reAsignacion.bindValue(":idU", agenda[i].idUsuario);
+                                        if(reAsignacion.exec()){
+                                            qDebug() << "Lugar re asignado";
+                                            foundIt.exec();
+                                            if(foundIt.clickedButton() == encontradito){
+                                                encontrado = true;
+                                                break;
+                                            }
+                                        }
+
+                                    }else{
+                                        encontrado = false;
                                     }
                                 }
 
-                                if(encontrado == 0){
+                                if(encontrado == false){
                                     QMessageBox notFound;
                                     notFound.setText("Actualmente no se encuntra ningún lugar disponible para ser reasignado");
                                     QAbstractButton * noEn = notFound.addButton("Acptar", QMessageBox::AcceptRole);
+                                    notFound.setIcon(QMessageBox::Information);
                                     notFound.exec();
                                     break;
                                 }
