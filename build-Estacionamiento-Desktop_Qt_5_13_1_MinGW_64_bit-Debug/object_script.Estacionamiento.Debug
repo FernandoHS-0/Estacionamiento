@@ -1,0 +1,11 @@
+debug/administrador.o
+debug/lugares.o
+debug/main.o
+debug/estacionamiento.o
+debug/objetos.o
+debug/usuario.o
+debug/qrc_img.o
+debug/moc_administrador.o
+debug/moc_estacionamiento.o
+debug/moc_lugares.o
+debug/moc_usuario.o

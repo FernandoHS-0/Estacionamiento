@@ -1,0 +1,11 @@
+release/administrador.o
+release/lugares.o
+release/main.o
+release/estacionamiento.o
+release/objetos.o
+release/usuario.o
+release/qrc_img.o
+release/moc_administrador.o
+release/moc_estacionamiento.o
+release/moc_lugares.o
+release/moc_usuario.o
