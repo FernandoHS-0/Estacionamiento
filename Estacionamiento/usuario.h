@@ -12,6 +12,8 @@
 #include <QMessageBox>
 #include "objetos.h"
 #include <QTime>
+#include <QStandardItemModel>
+
 namespace Ui {
 class Usuario;
 }
@@ -28,6 +30,8 @@ private slots:
     void on_Aceptar_clicked();
 
     void on_pushButton_3_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::Usuario *ui;

@@ -34,7 +34,7 @@ Usuario::Usuario(bool *perm,Usua * ses, QWidget *parent) :
             ui->Aceptar->setVisible(false);
             ui->pushButton_3->setVisible(true);
 }
-        //query para sacar el id de la res.
+        //query para sacar el id de la reservacion
     QTime EntradaR = QTime::currentTime();
     Entrada.prepare("UPDATE reservacionunica SET HoraEntradaReal=:HER WHERE IdUsuario=:noC");
     Entrada.bindValue(":noC",id);
@@ -68,8 +68,41 @@ Usuario::Usuario(bool *perm,Usua * ses, QWidget *parent) :
     ui->TipoTarifa->setText(TipoTarifa);
     ui->NumeroEspacio->setNum(espacio);
     ui->Pago->setNum(monto);
+
+    //haciendo mamadas pt1  (si funciono pero salio maupome de mamador)
+    QStringList titulos;
+    QString HoraEntrada;
+    QString HoraSalida;
+
+    HoraEntrada = llegada.toString();
+    HoraSalida = salida.toString();
+
+
+    ui->TablaComentarios->setColumnCount(2);
+    titulos << "Hora Entrada" << "Hora Salida";
+    ui->TablaComentarios->setHorizontalHeaderLabels(titulos);
+
+    ui->TablaComentarios->insertRow(ui->TablaComentarios->rowCount());
+    ui->TablaComentarios->setItem(ui->TablaComentarios->rowCount()-1,0,new QTableWidgetItem(HoraEntrada));
+    ui->TablaComentarios->setItem(ui->TablaComentarios->rowCount()-1,1,new QTableWidgetItem(HoraSalida));
+
+
     }
     db.close();
+
+    //a partir de aqui va el codigo para meter las notificaciones (jalo pero mas arriba)
+
+/*
+    QStringList titulos;
+    QString HoraEntrada;
+    QString HoraSalida;
+
+
+    ui->TablaComentarios->setColumnCount(2);
+    titulos << "Hora Entrada" << "Hora Salida";
+    ui->TablaComentarios->setHorizontalHeaderLabels(titulos);
+
+*/
 }
 
 Usuario::~Usuario()
@@ -104,4 +137,9 @@ void Usuario::on_pushButton_3_clicked()
     db.close();
     close();
 
+}
+
+void Usuario::on_pushButton_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(1);
 }
